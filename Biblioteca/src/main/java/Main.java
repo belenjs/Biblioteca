@@ -12,6 +12,11 @@ public class Main {
         System.out.println("Número de libros cargados " + bibliotecaController.obtenerLibros().size());
         Libro libro = bibliotecaController.buscarLibroId(11);
         System.out.println(libro);
+        bibliotecaController.agregarFavorito(5);
+        bibliotecaController.agregarFavorito(99);
+        bibliotecaController.agregarFavorito(1);
+        bibliotecaController.agregarFavorito(1);
+        System.out.println(bibliotecaController.obtenerFavoritos());
         /*List<Libro> libros = apiController.obtenerLibros();
 
         System.out.println("Número de libros: " + libros.size());
