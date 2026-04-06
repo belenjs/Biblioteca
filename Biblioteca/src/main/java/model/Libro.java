@@ -25,7 +25,7 @@ public class Libro implements Serializable {
     @SerializedName("Pages")
     @Expose
     private Integer pages;
-    private final static long serialVersionUID = -3930838321532352312L;
+    private static final long serialVersionUID = -3930838321532352312L;
 
     public Libro() {
     }
