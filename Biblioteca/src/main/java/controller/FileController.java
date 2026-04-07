@@ -19,7 +19,9 @@ public class FileController {
             System.out.println("Error en la escritura del fichero");;
         } finally {
             try {
-                objectOutputStream.close();
+                if(objectOutputStream != null){
+                    objectOutputStream.close();
+                }
             } catch (IOException | NullPointerException e ) {
                 System.out.println("Error en el cerrado");
             }
@@ -41,7 +43,9 @@ public class FileController {
         }
         finally {
             try {
-                objectInputStream.close();
+                if(objectInputStream != null) {
+                    objectInputStream.close();
+                }
             } catch (IOException e) {
                 System.out.println("Error en el cerrado");
             }
