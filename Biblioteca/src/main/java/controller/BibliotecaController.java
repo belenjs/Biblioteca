@@ -38,12 +38,9 @@ public class BibliotecaController {
         Libro libro = buscarLibroId(id);
         if((libro != null) && (!librosFavoritos.contains(libro))){
             librosFavoritos.add(libro);
-            System.out.println("Libro añadido a favoritos");
             return true;
-        } else{
-            System.out.println("No se puede añadir el libro a la lista de favoritos");
-            return false;
         }
+        return false;
     }
 
     public List<Libro> obtenerFavoritos(){
