@@ -15,14 +15,21 @@ public class Main {
         System.out.println("Bienvenido a la Biblioteca Municipal DAW");
         int opcion;
         do {
-            System.out.println("¿Qué te gustaría hacer hoy?. Elige una opción del 0 al 5:");
+            System.out.println("¿Qué te gustaría hacer hoy?. Elige una opción: ");
             System.out.println("1 - Importar libros");
             System.out.println("2 - Buscar libro por id");
             System.out.println("3 - Añadir libro a favoritos");
             System.out.println("4 - Exportar favoritos a fichero");
             System.out.println("5 - Importar favoritos desde fichero");
             System.out.println("0 - Salir");
-            opcion = scanner.nextInt();
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+            } else {
+                System.out.println("Debes introducir un número.");
+                scanner.next();
+                opcion = -1;
+            }
+            System.out.println();
             switch (opcion){
                 case 1 -> {
                     bibliotecaController.cargarLibros(apiController.obtenerLibrosAPI());
@@ -31,14 +38,20 @@ public class Main {
                     break;
                 }
                 case 2 -> {
-                    System.out.println("Introduce el id del libro a buscar: ");
-                    int idLibro = scanner.nextInt();
-                    Libro libroBuscado = bibliotecaController.buscarLibroId(idLibro);
-                    if (libroBuscado != null){
-                        System.out.println(libroBuscado);
+
+                    if(bibliotecaController.obtenerLibros().isEmpty()){
+                        System.out.println("Primero es necesario importar los libros. Introduce el número 1");
                     } else {
-                        System.out.println("No se ha encontrado ningún libro con dicho id en el sistema");
+                        System.out.println("Introduce el id del libro a buscar: ");
+                        int idLibro = scanner.nextInt();
+                        Libro libroBuscado = bibliotecaController.buscarLibroId(idLibro);
+                        if (libroBuscado != null){
+                            System.out.println("El libro con el id introducido es: "+libroBuscado);
+                        } else {
+                            System.out.println("No se ha encontrado ningún libro con dicho id en el sistema");
+                        }
                     }
+
                     break;
                 }
                 case 3 -> {
@@ -52,8 +65,13 @@ public class Main {
                     break;
                 }
                 case 4 -> {
-                    fileController.exportarFavoritos(bibliotecaController.obtenerFavoritos());
-                    System.out.println("Libros favoritos exportados correctamente");
+                    if(bibliotecaController.obtenerFavoritos().isEmpty()){
+                        System.out.println("No hay libros favoritos que exportar. " +
+                                "Primero agrega libros a la lista de favoritos.");
+                    } else{
+                        fileController.exportarFavoritos(bibliotecaController.obtenerFavoritos());
+                        System.out.println("Libros favoritos exportados correctamente");
+                    }
                     break;
                 }
                 case 5 -> {
@@ -61,8 +79,11 @@ public class Main {
                     if(listaFavoritosImportados.isEmpty()){
                         System.out.println("No hay ningún libro guardado en favoritos");
                     } else {
-                        System.out.println("Libros favoritos importados");
-                        System.out.println(listaFavoritosImportados);
+                        System.out.println("Libros favoritos importados: ");
+                        for(Libro libro : listaFavoritosImportados){
+                            System.out.println(libro);
+                        }
+
                     }
                     break;
                 }
