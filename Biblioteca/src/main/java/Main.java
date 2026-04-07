@@ -35,10 +35,8 @@ public class Main {
                     bibliotecaController.cargarLibros(apiController.obtenerLibrosAPI());
                     System.out.println("Libros importados correctamente");
                     System.out.println("Numero de libros cargados: " + bibliotecaController.obtenerLibros().size());
-                    break;
                 }
                 case 2 -> {
-
                     if(bibliotecaController.obtenerLibros().isEmpty()){
                         System.out.println("Primero es necesario importar los libros. Introduce el número 1");
                     } else {
@@ -51,18 +49,19 @@ public class Main {
                             System.out.println("No se ha encontrado ningún libro con dicho id en el sistema");
                         }
                     }
-
-                    break;
                 }
                 case 3 -> {
-                    System.out.println("Introduce el id del libro que quieres agregar a favoritos: ");
-                    int idFavorito = scanner.nextInt();
-                    if(bibliotecaController.agregarFavorito(idFavorito)){
-                        System.out.println("Libro agregado a favoritos correctamente");
+                    if (bibliotecaController.obtenerLibros().isEmpty()) {
+                        System.out.println("Primero es necesario importar los libros. Introduce el número 1");
                     } else {
-                        System.out.println("No se ha podido agregar el libro a favoritos");
+                        System.out.println("Introduce el id del libro que quieres agregar a favoritos: ");
+                        int idFavorito = scanner.nextInt();
+                        if(bibliotecaController.agregarFavorito(idFavorito)){
+                            System.out.println("Libro agregado a favoritos correctamente");
+                        } else {
+                            System.out.println("No se ha podido agregar el libro a favoritos");
+                        }
                     }
-                    break;
                 }
                 case 4 -> {
                     if(bibliotecaController.obtenerFavoritos().isEmpty()){
@@ -72,7 +71,6 @@ public class Main {
                         fileController.exportarFavoritos(bibliotecaController.obtenerFavoritos());
                         System.out.println("Libros favoritos exportados correctamente");
                     }
-                    break;
                 }
                 case 5 -> {
                     List<Libro> listaFavoritosImportados = fileController.importarFavoritos();
@@ -85,14 +83,9 @@ public class Main {
                         }
 
                     }
-                    break;
                 }
-                case 0 -> {
-                    System.out.println("Saliendo de la biblioteca...");
-                }
-                default -> {
-                    System.out.println("Opción no contemplada. Introduce otro número");
-                }
+                case 0 -> System.out.println("Saliendo de la biblioteca...");
+                default -> System.out.println("Opción no contemplada. Introduce otro número");
             }
         } while (opcion != 0);
         scanner.close();
