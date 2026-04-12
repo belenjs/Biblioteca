@@ -36,7 +36,21 @@ public class MenuPrincipal {
 
             switch (opcion){
                 case 1 -> importarLibros();
-                case 2 -> buscarLibroPorId();
+                case 2 -> {
+                    System.out.println("Introduce el id del libro a buscar en la API: ");
+                    if (scanner.hasNextInt()) {
+                        int idLibro = scanner.nextInt();
+                        Libro libroBuscado = apiController.buscarLibroPorIdAPI(idLibro);
+                        if (libroBuscado != null) {
+                            System.out.println("El libro con el id introducido es: " + libroBuscado);
+                        } else {
+                            System.out.println("No se ha encontrado ningún libro con dicho id en la API");
+                        }
+                    } else {
+                        System.out.println("Debes introducir un número.");
+                        scanner.next();
+                    }
+                }
                 case 3 -> agregarLibroFavoritos();
                 case 4 -> exportarFavoritos();
                 case 5 -> importarFavoritos();
@@ -71,26 +85,6 @@ public class MenuPrincipal {
         bibliotecaController.cargarLibros(apiController.obtenerLibrosAPI());
         System.out.println("Libros importados correctamente");
         System.out.println("Numero de libros cargados: " + bibliotecaController.obtenerLibros().size());
-    }
-
-    public void buscarLibroPorId(){
-        if(bibliotecaController.obtenerLibros().isEmpty()){
-            System.out.println("Primero es necesario importar los libros. Introduce el número 1");
-            return;
-        }
-        System.out.println("Introduce el id del libro a buscar: ");
-        if(scanner.hasNextInt()){
-            int idLibro = scanner.nextInt();
-            Libro libroBuscado = bibliotecaController.buscarLibroId(idLibro);
-            if (libroBuscado != null){
-                System.out.println("El libro con el id introducido es: "+libroBuscado);
-            } else {
-                System.out.println("No se ha encontrado ningún libro con dicho id en el sistema");
-            }
-        } else {
-            System.out.println("Debes introducir un número");
-            scanner.next();
-        }
     }
 
     public void agregarLibroFavoritos(){
